@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="cc/extend.js"></script>
+  </head>
+  <body>
+    <p>cc.extend test</p>
+  </body>
+  <script type="text/javascript">
+    var logPane = document.getElementsByTagName('body')[0]
+    function log(arg) {
+      var newLine = document.createElement('div')
+      newLine.innerHTML = arg
+      logPane.appendChild(newLine)
+    }
+
+    var Animal = cc.Class.extend({
+      type: "animal",
+      init: function() { log("birth of " + this.type) },
+      talk: function(word) { log("..." + word + "...") }
+    })
+
+    var Cat = Animal.extend({
+      type: "cat",
+      likes: { mice: 1, dogs: 0 },
+      talk: function(word) {
+        this.parent(word)
+        log("hiss")
+      }
+    })
+
+    var HouseCat = Cat.extend({
+      type: "friendly cat",
+      talk: function(word) {
+        log("meow")
+        this.parent(word)
+      }
+    })
+
+    var houseCat = new HouseCat
+    log(houseCat instanceof Animal)
+
+    var cat = new Cat
+    cat.talk(cat.type + ': skrr')
+    houseCat.talk(houseCat.type + ': mose')
+
+    ++cat.likes.dogs
+    log(houseCat.likes.dogs) // 1.. due to reference to same likes object
+  </script>
+</html>
