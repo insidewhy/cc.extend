@@ -46,7 +46,7 @@ cc.module('cc.extend').defines ->
           return ret
       else
         proto[name] = member
-    this
+    clss
 
   cc.Class = cc.extend Function, {}
   return

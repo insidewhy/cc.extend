@@ -61,6 +61,11 @@
         log(this.type + ": usually not")
         this.parent()
       }
+    }).inject({
+      hug: function() {
+        this.parent()
+        log(this.type + ": but sometimes")
+      }
     })
     houseCat.hug()
   </script>

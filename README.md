@@ -15,8 +15,8 @@ var Animal = cc.extend(Function, {}) // or cc.Class
 ```
 
 ## constructors and methods
-cc.extend also adds ".extend" as a "static method" to the returned class to
-simplify subclassing:
+cc.extend adds ".extend" as an instance method of the returned class which
+can be used to simplify subclassing:
 ```javascript
 var Cat = Animal.extend({
   init: function(name) {
@@ -50,14 +50,21 @@ animal.talk('mose') // logs "friendly cat: meow", "hiss(mose)"
 ## using inject to modify a class in place.
 cc.extend returns a new child class whilst cc.inject can be used to modify a class. Inside of a method overriden with cc.inject, "parent" refers to the overwridden method.
 ```javascript
+// a class created with cc.extend also gets a static "inject" method.
 HouseCat.inject({
-  talk: function() {
-    this.parent() // call non-injected version of HouseCat.talk().
+  talk: function(word) {
+    // call non-injected version of HouseCat.talk().
+    this.parent(word)
     log('prr')
   }
-}) // cc.inject(SomeClass, ...) would work for classes not created with extend
+}).inject({
+  talk: function(word) {
+    log('prr prr')
+    this.parent(word) // call inject function defined above
+  }
+})
 
-animal.talk('kit') // logs "friendly cat: meow", "hiss(kit)", "prr"
+animal.talk('kit') // logs "prr prr", "friendly cat: meow", "hiss(kit)", "prr"
 ```
 
 # testing
