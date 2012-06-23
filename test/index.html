@@ -21,16 +21,19 @@
       hug: function() { log("none for you") }
     })
 
-    var Cat = Animal.extend({
-      type: "cat",
-      likes: { mice: 1, dogs: 0 },
-      talk: function(word) {
-        this.parent(word)
-        log("hiss")
-      }
+    cc.module('Cat').defines(function() {
+        cc.global.Cat = Animal.extend({
+          type: "cat",
+          likes: { mice: 1, dogs: 0 },
+          talk: function(word) {
+            this.parent(word)
+            log("hiss")
+          }
+        })
     })
 
-    var HouseCat = Cat.extend({
+    // hook into cc module class system to create class
+    cc.module('HouseCat').parent('Cat').jClass({
       type: "friendly cat",
       talk: function(word) {
         log("meow")
