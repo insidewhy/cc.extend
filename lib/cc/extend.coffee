@@ -27,8 +27,26 @@ cc.module('cc.extend').defines ->
       `function ChildClass() {}`
     ChildClass.prototype = proto
     ChildClass.constructor = ChildClass
-    ChildClass.extend = (gchild) -> cc.extend ChildClass, gchild
-    return ChildClass
+    ChildClass.extend = (members) -> cc.extend ChildClass, members
+    ChildClass.inject = (members) -> cc.inject ChildClass, members
+    ChildClass
+
+  cc.inject = (clss, members) ->
+    proto = clss.prototype
+    for name, member of members
+      if typeof member is "function" and
+      typeof proto[name] is "function" and
+      fnTest.test member
+        backup = proto[name]
+        proto[name] = ->
+          tmp = @parent
+          @parent = backup
+          ret = member.apply this, arguments
+          @parent = tmp
+          return ret
+      else
+        proto[name] = member
+    this
 
   cc.Class = cc.extend Function, {}
   return

@@ -17,7 +17,8 @@
     var Animal = cc.Class.extend({
       type: "animal",
       init: function() { log("birth of " + this.type) },
-      talk: function(word) { log("..." + word + "...") }
+      talk: function(word) { log("..." + word + "...") },
+      hug: function() { log("none for you") }
     })
 
     var Cat = Animal.extend({
@@ -46,5 +47,13 @@
 
     ++cat.likes.dogs
     log(houseCat.likes.dogs) // 1.. due to reference to same likes object
+
+    Cat.inject({
+      hug: function() {
+        log(this.type + ": usually not")
+        this.parent()
+      }
+    })
+    houseCat.hug()
   </script>
 </html>
