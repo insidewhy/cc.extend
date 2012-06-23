@@ -29,7 +29,7 @@ var Cat = Animal.extend({
 })
 ```
 
-## Attributes and calling super methods
+## attributes and calling super methods
 parent can be called in any method to call the parent version of that method. Non-function values in an extend object become class attributes.
 ```javascript
 var HouseCat = Cat.extend({
@@ -47,7 +47,7 @@ var animal = new HouseCat,
 animal.talk('mose') // logs "friendly cat: meow", "hiss(mose)"
 ```
 
-## Using inject to modify a class in place.
+## using inject to modify a class in place.
 cc.extend returns a new child class whilst cc.inject can be used to modify a class. Inside of a method overriden with cc.inject, "parent" refers to the overwridden method.
 ```javascript
 HouseCat.inject({
@@ -69,5 +69,5 @@ cc.extend test server listening on: 8013
 please go to http://localhost:8013/
 ```
 
-# FAQ
- * Is this your idea? No I got it from [here](http://blog.buymeasoda.com/understanding-john-resigs-simple-javascript-i). The API is a (mainly) compatible rewrite and extension of [ImpactJS' class system](http://impactjs.com/documentation/class-reference/class).
+# faq
+ * The API is a (mainly) compatible rewrite and extension of [ImpactJS' class system](http://impactjs.com/documentation/class-reference/class). The technical details are explained [here](http://blog.buymeasoda.com/understanding-john-resigs-simple-javascript-i). 

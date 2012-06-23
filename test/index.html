@@ -42,14 +42,19 @@
     })
 
     var houseCat = new HouseCat
+    log("<hr/>")
     log(houseCat instanceof Animal)
+    log("<hr/>")
 
     var cat = new Cat
     cat.talk(cat.type + ': skrr')
+    log("<hr/>")
     houseCat.talk(houseCat.type + ': mose')
+    log("<hr/>")
 
     ++cat.likes.dogs
     log(houseCat.likes.dogs) // 1.. due to reference to same likes object
+    log("<hr/>")
 
     Cat.inject({
       hug: function() {
