@@ -11,7 +11,8 @@ sudo npm install -g cc.extend
 # usage
 ## cc.extend - class inheritance
 ```javascript
-var Animal = cc.extend(Function, {}) // or cc.Class
+var Animal = cc.extend(Function, {})
+// same: var Animal = cc.Class.extend({})
 ```
 
 ## constructors and methods
