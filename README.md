@@ -30,7 +30,7 @@ var Cat = Animal.extend({
 ```
 
 ## attributes and calling super methods
-parent can be called in any method to call the parent version of that method. Non-function values in an extend object become class attributes.
+"this.parent" can be used in a method to call the parent version of that method if it exists. Non-function values in an extend object become class attributes.
 ```javascript
 var HouseCat = Cat.extend({
   type: 'friendly cat',
@@ -47,8 +47,23 @@ var animal = new HouseCat,
 animal.talk('mose') // logs "friendly cat: meow", "hiss(mose)"
 ```
 
-## using inject to modify a class in place.
-cc.extend returns a new child class whilst cc.inject can be used to modify a class. Inside of a method overriden with cc.inject, "parent" refers to the overwridden method.
+## note on copying of attributes
+When a new object is constructed all attributes of type Object are deep cloned from the prototype into the new object unless:
+* They are HTML Elements.
+* They are an instance of cc.Class.
+
+Objects of the following class would be copied into attributes of newly constructed classes:
+```javascript
+var Animal = cc.extend(Function, { ... })
+```
+
+The following object would be referenced in attributes due to being an instance of cc.Class.
+```javascript
+var Animal = cc.Class.extend({ ... })
+```
+
+## using inject to modify a class in place
+cc.extend returns a new child class whilst cc.inject can be used to modify a class. Inside of a method overridden with cc.inject, "this.parent" refers to the overridden method.
 ```javascript
 // a class created with cc.extend also gets a static "inject" method.
 HouseCat.inject({
@@ -65,6 +80,21 @@ HouseCat.inject({
 })
 
 animal.talk('kit') // logs "prr prr", "friendly cat: meow", "hiss(kit)", "prr"
+```
+
+## using with cc.loader
+```javascript
+// file lib/project/Cat.js
+// creates class accessible via "project.Cat"
+cc.module('project.Cat').defines(function() {
+  this.set(Class.extend({ ... }))
+})
+```
+
+```javascript
+// file lib/project/HouseCat.js
+// requires lib/project/Cat.js file and sets project.Cat as parent of project.HouseCat
+cc.module('HouseCat').parent('project.Cat').jClass({ ... })
 ```
 
 # testing

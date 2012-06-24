@@ -22,19 +22,20 @@
     })
 
     cc.module('Cat').defines(function() {
-        cc.global.Cat = Animal.extend({
+        this.set(Animal.extend({
           type: "cat",
           likes: { mice: 1, dogs: 0 },
           talk: function(word) {
             this.parent(word)
             log("hiss")
           }
-        })
+        }))
     })
 
     // hook into cc module class system to create class
     cc.module('HouseCat').parent('Cat').jClass({
       type: "friendly cat",
+      friend: new Cat(),
       talk: function(word) {
         log("meow")
         this.parent(word)
@@ -53,7 +54,7 @@
     log("<hr/>")
 
     ++cat.likes.dogs
-    log(houseCat.likes.dogs) // 1.. due to reference to same likes object
+    log(houseCat.likes.dogs) // 0.. as each object has clone
     log("<hr/>")
 
     Cat.inject({
