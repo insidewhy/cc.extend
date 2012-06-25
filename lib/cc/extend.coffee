@@ -82,6 +82,7 @@ cc.module('cc.extend').defines ->
         proto[name] = member
     clss
 
-  cc.Class = cc.extend Function, {}
+cc.module('cc.Class').defines ->
+  @set cc.extend Function, {}
   return
 # vim:ts=2 sw=2

@@ -14,7 +14,8 @@
       logPane.appendChild(newLine)
     }
 
-    var Animal = cc.Class.extend({
+    // var Animal = cc.Class.extend({
+    cc.module('Animal').parent('cc.Class').jClass({
       type: "animal",
       init: function() { log("birth of " + this.type) },
       talk: function(word) { log("..." + word + "...") },
