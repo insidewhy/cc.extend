@@ -40,12 +40,13 @@ cc.module('cc.extend').defines ->
       if typeof member is "function"
         proto[name] =
           if typeof prntProto[name] is "function" and fnTest.test member
-            ->
-              tmp = @parent
-              @parent = prntProto[name]
-              ret = member.apply this, arguments
-              @parent = tmp
-              return ret
+            do (name, member) ->
+              return ->
+                tmp = @parent
+                @parent = prntProto[name]
+                ret = member.apply this, arguments
+                @parent = tmp
+                return ret
           else member
       else if cc.avoidCloning member
         proto[name] = member
@@ -54,7 +55,6 @@ cc.module('cc.extend').defines ->
 
     `function ChildClass() {`
     return if initing
-    # TODO: copy attributes
     this[attrName] = cc.cloneCloneable attr for attrName, attr of attributes
     @init.apply this, arguments if @init
     `}`

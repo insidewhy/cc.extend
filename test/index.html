@@ -35,6 +35,10 @@
 
     // hook into cc module class system to create class
     cc.module('HouseCat').parent('Cat').jClass({
+      init: function() {
+        log("controlled birth")
+        this.parent();
+      },
       type: "friendly cat",
       friend: new Cat(),
       talk: function(word) {
@@ -43,20 +47,18 @@
       }
     })
 
+    log("<hr/>")
     var houseCat = new HouseCat
-    log("<hr/>")
     log(houseCat instanceof Animal)
-    log("<hr/>")
+    houseCat.talk(houseCat.type + ': mose')
 
+    log("<hr/>")
     var cat = new Cat
     cat.talk(cat.type + ': skrr')
-    log("<hr/>")
-    houseCat.talk(houseCat.type + ': mose')
-    log("<hr/>")
 
+    log("<hr/>")
     ++cat.likes.dogs
     log(houseCat.likes.dogs) // 0.. as each object has clone
-    log("<hr/>")
 
     Cat.inject({
       hug: function() {
@@ -69,6 +71,8 @@
         log(this.type + ": but sometimes")
       }
     })
+
+    log("<hr/>")
     houseCat.hug()
   </script>
 </html>
