@@ -20,7 +20,7 @@ cc.module('cc.extend').defines ->
     if obj instanceof Array
       retObj = []
       retObj.length = obj.length
-      retObj[i] = cc.clone obj[i] for i in obj
+      retObj[i] = cc.clone val for val, i in obj
       retObj
     else
       retObj = {}
